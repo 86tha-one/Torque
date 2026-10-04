@@ -5,6 +5,7 @@ import "github.com/86tha-one/Torque"
 import "time"
 
 func    PR01 (I string, L *Torque.OpLogbook) {
+	panic("I dont feel like working")
 	BE05 := fmt.Sprintf ("%s: Running...", I)
 	for  {
 		fmt.Println (BE05)
@@ -22,8 +23,6 @@ func    main () {
 	for _ , CE10 := range  BE15 {
 		CE15 := CE10.Launch ()
 		if CE15 !=  nil { fmt.Println (CE15); return }
-		CE20 := <- CE10.OpLb.LaunchNotificationChannel
-		if CE20 !=  nil { fmt.Println (CE20); return }
 	}
 	time.Sleep (time.Second*256)
 }
