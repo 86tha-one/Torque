@@ -11,7 +11,7 @@ type    Worker  struct {
 	Plss     bool // Plss
 	RErr    error // Runtime error
 	prgr     func(string,*OpLogbook)
-	opLb    *OpLogbook
+	OpLb    *OpLogbook
 	shWh     func()
 }
 func(O *Worker) Init (UUID string, Program func(string,*OpLogbook), ShutdownWebhook func()) {
@@ -31,7 +31,7 @@ func(O *Worker) Launch() (error) {
 	if O.Plss {
 		return errors.New("Worker has active instance")
 	}
-	O.opLb= &OpLogbook { LaunchNotificationChannel: make(chan error, 1) }
+	O.OpLb= &OpLogbook { LaunchNotificationChannel: make(chan error, 1) }
 	O.RErr= nil
 	O.Plss= true
 	/***3***/
@@ -44,7 +44,7 @@ func(O *Worker) Launch() (error) {
 			}
 			O.Plss = false
 		}()
-		O.prgr (O.uuid, O.opLb)
+		O.prgr (O.uuid, O.OpLb)
 	}       ( )
 return  nil
 }
@@ -58,8 +58,8 @@ func(O *Worker) Shtdwn() (error) {
 		return errors.New("Worker not running")
 	}
 	/***3***/
-	if O.opLb.ShutdownFlag { return nil }
+	if O.OpLb.ShutdownFlag { return nil }
 	if O.shWh != nil { O.shWh () }
-	O.opLb.ShutdownFlag = true
+	O.OpLb.ShutdownFlag = true
 return  nil
 }
