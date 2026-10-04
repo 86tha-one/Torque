@@ -81,7 +81,7 @@ func(O *Worker) Shtdwn (ShtdwnGrace time.Duration) (error) {
 	if O.prgr == nil { panic ("Worker was not initialized") }
 	O.mtxx.Lock (); defer O.mtxx.Unlock ()
 	/***2***/
-	if O.Plss {
+	if O.Plss ==false{
 		return errors.New("Worker not running")
 	}
 	/***3***/

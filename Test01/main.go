@@ -1,11 +1,14 @@
 package main
 
+// import "errors"
 import "fmt"
 import "github.com/86tha-one/Torque"
 import "time"
 
 func    PR01 (I string, L *Torque.OpLogbook) {
-	panic("I dont feel like working")
+	L.RecordSLaunch ( )
+//	time.Sleep (time.Second*5)
+//	if true { panic ("I dont feel like working") }
 	BE05 := fmt.Sprintf ("%s: Running...", I)
 	for  {
 		fmt.Println (BE05)
@@ -20,9 +23,21 @@ func    main () {
 	BE11.Init ("PR01", PR01, nil)
 	BE12.Init ("PR02", PR01, nil)
 	BE15 := BE05.LaunchSequence ()
+	BE20 := BE05.ShtdwnSequence ()
 	for _ , CE10 := range  BE15 {
-		CE15 := CE10.Launch ()
-		if CE15 !=  nil { fmt.Println (CE15); return }
+		CE15 := CE10.Launch (time.Second*5)
+		if  CE15 !=  nil { fmt.Println (CE15); return }
+		fmt.Println ("Worker launched")
 	}
-	time.Sleep (time.Second*256)
+	/*
+	for _ , CE10 := range  BE20 {
+		for CE10.Plss { time.Sleep (time.Millisecond*100) }
+		fmt.Println (CE10.RErr)
+	}*/
+	time.Sleep (time.Second*5)
+	for _ , CE10 := range  BE20 {
+		CE15 := CE10.Shtdwn (time.Second*5)
+		if  CE15 !=  nil { fmt.Println (CE15); return }
+		fmt.Println ("Worker shutdown")
+	}
 }
