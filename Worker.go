@@ -7,7 +7,7 @@ import "sync"
 import "time"
 
 type    Worker  struct {
-	uuid    string
+	UUID    string
 	mtxx    *sync.Mutex
 	Plss     bool // Plss
 	RErr    error // Runtime error
@@ -18,14 +18,14 @@ type    Worker  struct {
 func(O *Worker) Init (UUID string, Program func(string,*OpLogbook), ShutdownWebhook func()) {
 	if UUID == "" { panic ("Worker's UUID not provided") }
 	if Program == nil { panic ("Worker's program not provided") }
-	O.uuid = UUID
+	O.UUID = UUID
 	O.mtxx =&sync.Mutex{ }
 	O.prgr = Program
 	O.shWh = ShutdownWebhook
 }
 func(O *Worker) Launch (LaunchGrace time.Duration) (error) {
 	/***1***/
-	if O.uuid ==  "" { panic ("Worker was not initialized") }
+	if O.UUID ==  "" { panic ("Worker was not initialized") }
 	if O.prgr == nil { panic ("Worker was not initialized") }
 	O.mtxx.Lock (); defer O.mtxx.Unlock ()
 	/***2***/
@@ -54,7 +54,7 @@ func(O *Worker) Launch (LaunchGrace time.Duration) (error) {
 			O.Plss = false
 			AE05 <- true
 		}  (  )
-		O.prgr (O.uuid, O.opLb)
+		O.prgr (O.UUID, O.opLb)
 	}  (  )
 	/***4***/
 	select  {
@@ -77,7 +77,7 @@ func(O *Worker) Launch (LaunchGrace time.Duration) (error) {
 }
 func(O *Worker) Shtdwn (ShtdwnGrace time.Duration) (error) {
 	/***1***/
-	if O.uuid ==  "" { panic ("Worker was not initialized") }
+	if O.UUID ==  "" { panic ("Worker was not initialized") }
 	if O.prgr == nil { panic ("Worker was not initialized") }
 	O.mtxx.Lock (); defer O.mtxx.Unlock ()
 	/***2***/
