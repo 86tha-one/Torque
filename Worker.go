@@ -92,7 +92,7 @@ func(O *Worker) Shtdwn (ShtdwnGrace time.Duration) (error) {
 	AE05 := time.Now ().Add (ShtdwnGrace).Unix ()
 	for     {
 		if O.Plss == false { return nil }
-		if time.Now ().Unix () > AE05 { return errors.New ("TIMEOUT") }
+		if ShtdwnGrace != 0 && (time.Now ().Unix () > AE05) { return errors.New ("TIMEOUT") }
 		time.Sleep (time.Millisecond*100)
 	}
 }
