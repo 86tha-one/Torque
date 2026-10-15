@@ -48,7 +48,7 @@ func(O *Worker) Launch (LaunchGrace time.Duration) (error) {
 		defer   func() {
 			CE05 := recover ()
 			if CE05 !=  nil {
-				DE05 := fmt.Sprintf (`Worker failed [%v]`, string(debug.Stack()))
+				DE05 := fmt.Sprintf (`Worker failed [%v:%v]`, string(debug.Stack()), CE05)
 				O.RErr = errors.New (DE05)
 			}
 			O.Plss = false
